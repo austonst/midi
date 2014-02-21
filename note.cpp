@@ -1,4 +1,7 @@
 /*
+  Copyright (c) 2014 Auston Sterling
+  See LICENSE for copying permissions.
+  
   -----Note Implementation File-----
   Auston Sterling
   austonst@gmail.com

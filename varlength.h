@@ -1,4 +1,7 @@
 /*
+  Copyright (c) 2014 Auston Sterling
+  See LICENSE for copying permissions.
+  
   -----Variable Length Number Header-----
   Auston Sterling
   austonst@gmail.com

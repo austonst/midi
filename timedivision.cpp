@@ -1,4 +1,7 @@
 /*
+  Copyright (c) 2014 Auston Sterling
+  See LICENSE for copying permissions.
+  
   -----TimeDivision Class Implementation-----
   Auston Sterling
   austonst@gmail.com
