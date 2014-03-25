@@ -1,3 +1,6 @@
+# Copyright (c) 2014 Auston Sterling
+# See LICENSE for copying permission.
+
 CC = g++ -g
 CFLAGS = -Wall -Wextra -c
 LFLAGS =
