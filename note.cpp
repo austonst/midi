@@ -9,7 +9,7 @@
   Contains the implementations for the Note class and other related classes.
 */
 
-#include "note.h"
+#include "note.hpp"
 
 namespace midi
 {

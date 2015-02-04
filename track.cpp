@@ -9,7 +9,7 @@
   Contains the implementation for the Track class, representing a MIDI track.
 */
 
-#include "track.h"
+#include "track.hpp"
 
 #include <map>
 

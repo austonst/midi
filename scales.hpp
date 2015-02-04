@@ -9,10 +9,10 @@
   Contains constants and functions to be able to easily use or reference scales.
 */
 
-#ifndef _scales_h_
-#define _scales_h_
+#ifndef _scales_hpp_
+#define _scales_hpp_
 
-#include "note.h"
+#include "note.hpp"
 
 namespace midi
 {

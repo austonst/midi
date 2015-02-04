@@ -9,8 +9,8 @@
   Contains the header for the TimeDivision class, for use in MIDI files.
 */
 
-#ifndef _timedivision_h_
-#define _timedivision_h_
+#ifndef _timedivision_hpp_
+#define _timedivision_hpp_
 
 #include <vector>
 #include <stdint.h>

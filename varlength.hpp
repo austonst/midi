@@ -11,8 +11,8 @@
   length is four bytes.
 */
 
-#ifndef _varlength_h_
-#define _varlength_h_
+#ifndef _varlength_hpp_
+#define _varlength_hpp_
 
 #include <stdint.h>
 #include <string>

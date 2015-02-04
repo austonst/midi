@@ -9,7 +9,7 @@
   Contains the header for the MIDI class, representing a MIDI file.
 */
 
-#include "midi.h"
+#include "midi.hpp"
 
 namespace midi
 {

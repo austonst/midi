@@ -9,10 +9,10 @@
   Unit tests for various aspects of the MIDI library.
 */
 
-#include "midi.h"
-#include "instruments.h"
-#include "scales.h"
-#include "chords.h"
+#include "midi.hpp"
+#include "instruments.hpp"
+#include "scales.hpp"
+#include "chords.hpp"
 
 #include <iostream>
 #include <string>

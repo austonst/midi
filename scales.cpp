@@ -12,7 +12,7 @@
 #ifndef _scales_cpp_
 #define _scales_cpp_
 
-#include "scales.h"
+#include "scales.hpp"
 
 namespace midi
 {

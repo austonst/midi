@@ -9,8 +9,8 @@
   Contains the headers for the Note class and other related classes.
 */
 
-#ifndef _note_h_
-#define _note_h_
+#ifndef _note_hpp_
+#define _note_hpp_
 
 #include <string>
 #include <set>

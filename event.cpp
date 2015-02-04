@@ -9,7 +9,7 @@
   Contains the implementation for the Event class, referring to MIDI events on a track.
 */
 
-#include "event.h"
+#include "event.hpp"
 
 namespace midi
 {

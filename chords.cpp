@@ -12,7 +12,7 @@
 #ifndef _chords_cpp_
 #define _chords_cpp_
 
-#include "chords.h"
+#include "chords.hpp"
 
 namespace midi
 {

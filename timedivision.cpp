@@ -9,7 +9,7 @@
   Contains the implementation for the TimeDivision class, for use in MIDI files.
 */
 
-#include "timedivision.h"
+#include "timedivision.hpp"
 
 namespace midi
 {

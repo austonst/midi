@@ -9,11 +9,11 @@
   Contains the header for the Event class, referring to MIDI events on a track.
 */
 
-#ifndef _event_h_
-#define _event_h_
+#ifndef _event_hpp_
+#define _event_hpp_
 
-#include "varlength.h"
-#include "instruments.h"
+#include "varlength.hpp"
+#include "instruments.hpp"
 
 #include <vector>
 #include <stdint.h>

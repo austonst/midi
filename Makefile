@@ -15,28 +15,28 @@ testmidi: $(TESTMIDI_OBJ)
 testmidi.o: testmidi.cpp midi.o
 	$(CC) testmidi.cpp $(CFLAGS)
 
-midi.o: midi.cpp midi.h track.o timedivision.o
+midi.o: midi.cpp midi.hpp track.o timedivision.o
 	$(CC) midi.cpp $(CFLAGS)
 
-track.o: track.cpp track.h event.o note.o
+track.o: track.cpp track.hpp event.o note.o
 	$(CC) track.cpp $(CFLAGS)
 
-timedivision.o: timedivision.cpp timedivision.h
+timedivision.o: timedivision.cpp timedivision.hpp
 	$(CC) timedivision.cpp $(CFLAGS)
 
-event.o: event.cpp event.h varlength.o instruments.h
+event.o: event.cpp event.hpp varlength.o instruments.hpp
 	$(CC) event.cpp $(CFLAGS)
 
-note.o: note.cpp note.h
+note.o: note.cpp note.hpp
 	$(CC) note.cpp $(CFLAGS)
 
-varlength.o: varlength.cpp varlength.h
+varlength.o: varlength.cpp varlength.hpp
 	$(CC) varlength.cpp $(CFLAGS)
 
-scales.o: scales.cpp scales.h note.o
+scales.o: scales.cpp scales.hpp note.o
 	$(CC) scales.cpp $(CFLAGS)
 
-chords.o: chords.cpp chords.h note.o
+chords.o: chords.cpp chords.hpp note.o
 	$(CC) chords.cpp $(CFLAGS)
 
 clean:

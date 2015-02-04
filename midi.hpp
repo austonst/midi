@@ -9,11 +9,11 @@
   Contains the header for the MIDI class, representing a MIDI file.
 */
 
-#ifndef _midi_h_
-#define _midi_h_
+#ifndef _midi_hpp_
+#define _midi_hpp_
 
-#include "track.h"
-#include "timedivision.h"
+#include "track.hpp"
+#include "timedivision.hpp"
 
 #include <vector>
 #include <fstream>

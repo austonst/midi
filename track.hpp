@@ -9,11 +9,11 @@
   Contains the header for the Track class, representing a MIDI track.
 */
 
-#ifndef _track_h_
-#define _track_h_
+#ifndef _track_hpp_
+#define _track_hpp_
 
-#include "event.h"
-#include "note.h"
+#include "event.hpp"
+#include "note.hpp"
 
 #include <vector>
 #include <queue>

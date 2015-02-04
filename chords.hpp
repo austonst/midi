@@ -9,10 +9,10 @@
   Contains functions to be able to easily use or reference common chords.
 */
 
-#ifndef _chords_h_
-#define _chords_h_
+#ifndef _chords_hpp_
+#define _chords_hpp_
 
-#include "note.h"
+#include "note.hpp"
 
 namespace midi
 {

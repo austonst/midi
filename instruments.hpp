@@ -10,8 +10,8 @@
   Uses General MIDI Level 1 Instrument Patches.
 */
 
-#ifndef _instruments_h_
-#define _instruments_h_
+#ifndef _instruments_hpp_
+#define _instruments_hpp_
 
 #include <stdint.h>
 

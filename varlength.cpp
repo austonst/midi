@@ -11,7 +11,7 @@
   length is four bytes.
 */
 
-#include "varlength.h"
+#include "varlength.hpp"
 
 namespace midi
 {
