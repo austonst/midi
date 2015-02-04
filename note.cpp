@@ -149,12 +149,6 @@ namespace midi
     return midiVal();
   }
 
-  //Typecast to int
-  Note::operator int() const
-  {
-    return int(midiVal());
-  }
-
   //Note operators
   bool operator==(const Note& n1, const Note& n2)
   {

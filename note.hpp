@@ -37,7 +37,6 @@ namespace midi
     operator std::string() const;
     int8_t midiVal() const;
     operator int8_t() const;
-    operator int() const;
   
   private:
     int8_t number_;
