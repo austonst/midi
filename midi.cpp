@@ -54,16 +54,16 @@ namespace midi
   }
 
   //Size
-  size_t MIDI_Type0::size() const
+  std::size_t MIDI_Type0::size() const
   {
     return 14 + track_->size();
   }
 
   //Data
-  std::vector<uint8_t> MIDI_Type0::data() const
+  std::vector<std::uint8_t> MIDI_Type0::data() const
   {
     //Create the output vector
-    std::vector<uint8_t> out;
+    std::vector<std::uint8_t> out;
   
     //MIDI header
     out.reserve(14);
@@ -82,11 +82,11 @@ namespace midi
     out.push_back(0);
     out.push_back(1);
 
-    std::vector<uint8_t> td = td_.data();
+    std::vector<std::uint8_t> td = td_.data();
     out.insert(out.end(), td.begin(), td.end());
 
     //Track data
-    std::vector<uint8_t> tdata = track_->data();
+    std::vector<std::uint8_t> tdata = track_->data();
     out.insert(out.end(), tdata.begin(), tdata.end());
 
     //Return the output
@@ -127,13 +127,13 @@ namespace midi
   }
 
   //Size accessor
-  size_t MIDI_Type1::size() const
+  std::size_t MIDI_Type1::size() const
   {
     //Start with header
-    size_t out  = 14;
+    std::size_t out  = 14;
 
     //Add each track
-    for (size_t i = 0; i < track_.size(); i++)
+    for (std::size_t i = 0; i < track_.size(); i++)
       {
         out += track_[i]->size();
       }
@@ -142,10 +142,10 @@ namespace midi
   }
 
   //Data
-  std::vector<uint8_t> MIDI_Type1::data() const
+  std::vector<std::uint8_t> MIDI_Type1::data() const
   {
     //Create the output vector
-    std::vector<uint8_t> out;
+    std::vector<std::uint8_t> out;
   
     //MIDI header
     out.reserve(14);
@@ -164,12 +164,12 @@ namespace midi
     out.push_back(track_.size() >> 8);
     out.push_back(track_.size() & 0xFF);
 
-    std::vector<uint8_t> td = td_.data();
+    std::vector<std::uint8_t> td = td_.data();
     out.insert(out.end(), td.begin(), td.end());
 
     //Track data
-    std::vector<uint8_t> tdata;
-    for (size_t i = 0; i < track_.size(); i++)
+    std::vector<std::uint8_t> tdata;
+    for (std::size_t i = 0; i < track_.size(); i++)
       {
         tdata = track_[i]->data();
         out.insert(out.end(), tdata.begin(), tdata.end());
@@ -188,7 +188,7 @@ namespace midi
   //Clears all tracks from the MIDI
   void MIDI_Type1::clear()
   {
-    for (size_t i = 0; i < track_.size(); i++)
+    for (std::size_t i = 0; i < track_.size(); i++)
       {
         delete track_[i];
       }
@@ -215,13 +215,13 @@ namespace midi
   }
 
   //Size accessor
-  size_t MIDI_Type2::size() const
+  std::size_t MIDI_Type2::size() const
   {
     //Start with header
-    size_t out  = 14;
+    std::size_t out  = 14;
 
     //Add each track
-    for (size_t i = 0; i < track_.size(); i++)
+    for (std::size_t i = 0; i < track_.size(); i++)
       {
         out += track_[i]->size();
       }
@@ -230,10 +230,10 @@ namespace midi
   }
 
   //Data
-  std::vector<uint8_t> MIDI_Type2::data() const
+  std::vector<std::uint8_t> MIDI_Type2::data() const
   {
     //Create the output vector
-    std::vector<uint8_t> out;
+    std::vector<std::uint8_t> out;
   
     //MIDI header
     out.reserve(14);
@@ -252,12 +252,12 @@ namespace midi
     out.push_back(track_.size() >> 8);
     out.push_back(track_.size() & 0xFF);
 
-    std::vector<uint8_t> td = td_.data();
+    std::vector<std::uint8_t> td = td_.data();
     out.insert(out.end(), td.begin(), td.end());
 
     //Track data
-    std::vector<uint8_t> tdata;
-    for (size_t i = 0; i < track_.size(); i++)
+    std::vector<std::uint8_t> tdata;
+    for (std::size_t i = 0; i < track_.size(); i++)
       {
         tdata = track_[i]->data();
         out.insert(out.end(), tdata.begin(), tdata.end());
@@ -276,7 +276,7 @@ namespace midi
   //Clears all tracks from the MIDI
   void MIDI_Type2::clear()
   {
-    for (size_t i = 0; i < track_.size(); i++)
+    for (std::size_t i = 0; i < track_.size(); i++)
       {
         delete track_[i];
       }
@@ -293,26 +293,26 @@ namespace midi
     if (!fin) return NULL;
 
     //Read the header
-    uint8_t header[14];
+    std::uint8_t header[14];
     fin.seekg(0, ios::beg);
     fin.read(header, 14);
 
     //Check the type, time division, and number of tracks
-    uint8_t type = header[9];
-    uint16_t numTracks = uint16_t(header[10])<<8 | header[11];
-    TimeDivision td(uint16_t(header[12])<<8 | header[13]);
+    std::uint8_t type = header[9];
+    std::uint16_t numTracks = std::uint16_t(header[10])<<8 | header[11];
+    TimeDivision td(std::uint16_t(header[12])<<8 | header[13]);
 
     //Read in each track;
     std::vector<Track*> tracks;
     tracks.resize(numTracks);
-    for (uint16_t i = 0; i < numTracks; i++)
+    for (std::uint16_t i = 0; i < numTracks; i++)
       {
         //Read the track header
-        uint8_t t_head[8];
+        std::uint8_t t_head[8];
         file.read(t_head, 8);
 
         //Find the track size
-        uint32_t trackSize = 0;
+        std::uint32_t trackSize = 0;
         for (int j = 0; j < 4; j++)
           {
             trackSize << 8;
@@ -320,7 +320,7 @@ namespace midi
           }
 
         //Read in the track
-        std::vector<uint8_t> tr;
+        std::vector<std::uint8_t> tr;
         tr.resize(trackSize);
         fin.read(&(tr[0]), trackSize);
 

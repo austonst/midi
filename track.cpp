@@ -25,7 +25,7 @@ namespace midi
   //Clears the vector, freeing all Events
   void EventTrack::clear()
   {
-    for (size_t i = 0; i < event_.size(); i++)
+    for (std::size_t i = 0; i < event_.size(); i++)
       {
         delete event_[i];
       }
@@ -33,13 +33,13 @@ namespace midi
   }
 
   //Returns the size of the entire track
-  size_t EventTrack::size() const
+  std::size_t EventTrack::size() const
   {
     //Header
-    size_t ret = 8;
+    std::size_t ret = 8;
 
     //Events
-    for (size_t i = 0; i < event_.size(); i++)
+    for (std::size_t i = 0; i < event_.size(); i++)
       {
         ret += event_[i]->size();
       }
@@ -55,25 +55,25 @@ namespace midi
   }
 
   //Combines all of the event data along with the header
-  std::vector<uint8_t> EventTrack::data() const
+  std::vector<std::uint8_t> EventTrack::data() const
   {
     //Construct header
-    std::vector<uint8_t> out;
+    std::vector<std::uint8_t> out;
     out.push_back('M');
     out.push_back('T');
     out.push_back('r');
     out.push_back('k');
-    size_t trackSize = size()-8;
+    std::size_t trackSize = size()-8;
     out.push_back(trackSize >> 24);
     out.push_back((trackSize >> 16)&0xFF);
     out.push_back((trackSize >> 8)&0xFF);
     out.push_back(trackSize&0xFF);
 
     //Add on every event's data
-    for (size_t i = 0; i < event_.size(); i++)
+    for (std::size_t i = 0; i < event_.size(); i++)
       {
         //Get the event's data
-        std::vector<uint8_t> eventData = event_[i]->data();
+        std::vector<std::uint8_t> eventData = event_[i]->data();
 
         //Add it all
         out.insert(out.end(), eventData.begin(), eventData.end());
@@ -89,17 +89,17 @@ namespace midi
     //which will return their note from getNote. Note On returns the actual
     //note, Note Off returns the note + 128. Any other event returns 256.
     NoteTrack track;
-    uint32_t totalTime = 0;
-    for (size_t i = 0; i < event_.size(); i++)
+    std::uint32_t totalTime = 0;
+    for (std::size_t i = 0; i < event_.size(); i++)
       {
         totalTime += event_[i]->dt();
-        uint16_t val = event_[i]->getNote();
+        std::uint16_t val = event_[i]->getNote();
       
         if (val < 128)
           {
             //Find the associated Note Off event
-            uint32_t duration = 0;
-            size_t j;
+            std::uint32_t duration = 0;
+            std::size_t j;
             for (j = i+1; j < event_.size(); j++)
               {
                 duration += event_[j]->dt();
@@ -131,7 +131,7 @@ namespace midi
   {
     EventTrack* et = new EventTrack;
   
-    for (size_t i = 0; i < event_.size(); i++)
+    for (std::size_t i = 0; i < event_.size(); i++)
       {
         et->add(*event_[i]);
       }
@@ -146,13 +146,13 @@ namespace midi
   }
 
   //Returns the size of the data when converted to an EventTrack
-  size_t NoteTrack::size() const
+  std::size_t NoteTrack::size() const
   {
     return data().size();
   }
 
   //Adds a note in a few different ways
-  void NoteTrack::add(Note note, uint32_t time, uint32_t duration, uint8_t instrument)
+  void NoteTrack::add(Note note, std::uint32_t time, std::uint32_t duration, std::uint8_t instrument)
   {
     NoteTime nt;
     nt.note = note;
@@ -167,7 +167,7 @@ namespace midi
     note_.push_back(nt);
   }
 
-  void NoteTrack::add(Chord chord, uint32_t time, uint32_t duration, uint8_t instrument)
+  void NoteTrack::add(Chord chord, std::uint32_t time, std::uint32_t duration, std::uint8_t instrument)
   {
     //Add each of the notes
     for (std::set<Note>::const_iterator i = chord.notes().begin(); i != chord.notes().end(); i++)
@@ -182,10 +182,10 @@ namespace midi
   }
 
   //Adds this note deltaTime after the last note begins
-  void NoteTrack::addAfterLastPress(Note note, uint32_t deltaTime, uint32_t duration, uint8_t instrument)
+  void NoteTrack::addAfterLastPress(Note note, std::uint32_t deltaTime, std::uint32_t duration, std::uint8_t instrument)
   {
-    uint32_t time = 0;
-    for (size_t i = 0; i < note_.size(); i++)
+    std::uint32_t time = 0;
+    for (std::size_t i = 0; i < note_.size(); i++)
       {
         if (note_[i].begin > time) time = note_[i].begin;
       }
@@ -196,7 +196,7 @@ namespace midi
   }
 
   //TODO: Verify that this plays all notes at once
-  void NoteTrack::addAfterLastPress(Chord chord, uint32_t deltaTime, uint32_t duration, uint8_t instrument)
+  void NoteTrack::addAfterLastPress(Chord chord, std::uint32_t deltaTime, std::uint32_t duration, std::uint8_t instrument)
   {
     //Add each of the notes
     for (std::set<Note>::const_iterator i = chord.notes().begin(); i != chord.notes().end(); i++)
@@ -215,9 +215,9 @@ namespace midi
     track.add(TimeSignatureEvent(0, 4, 4, 24, 8));
 
     //Find all of the instruments used in this track
-    std::map<uint8_t, uint8_t> instrumentChannel;
-    uint8_t channel = 0;
-    for (size_t i = 0; i < note_.size(); i++)
+    std::map<std::uint8_t, std::uint8_t> instrumentChannel;
+    std::uint8_t channel = 0;
+    for (std::size_t i = 0; i < note_.size(); i++)
       {
         if (instrumentChannel.find(note_[i].instrument) == instrumentChannel.end())
           {
@@ -227,7 +227,7 @@ namespace midi
           }
       }
 
-    for (std::map<uint8_t, uint8_t>::iterator i = instrumentChannel.begin();
+    for (std::map<std::uint8_t, std::uint8_t>::iterator i = instrumentChannel.begin();
          i != instrumentChannel.end(); i++)
       {
         track.add(ProgramChangeEvent(0, i->second, i->first));
@@ -237,7 +237,7 @@ namespace midi
     std::priority_queue<NoteTime, std::vector<NoteTime>, NoteTimeComparer> queue;
 
     //For each note
-    for (size_t i = 0; i < note_.size(); i++)
+    for (std::size_t i = 0; i < note_.size(); i++)
       {
         //Add both the Note On and Note Off events
         queue.push(note_[i]);
@@ -250,7 +250,7 @@ namespace midi
       }
 
     //Fill up the EventTrack
-    uint32_t prevTime = 0;
+    std::uint32_t prevTime = 0;
     while (!queue.empty())
       {
         //Get the next NoteTime
@@ -258,7 +258,7 @@ namespace midi
         queue.pop();
 
         //Find the deltaTime
-        uint32_t deltaTime;
+        std::uint32_t deltaTime;
         deltaTime = nt.begin - prevTime;
         prevTime = nt.begin;
 
@@ -287,7 +287,7 @@ namespace midi
   }
 
   //Data, which only really makes sense as an EventTrack
-  std::vector<uint8_t> NoteTrack::data() const
+  std::vector<std::uint8_t> NoteTrack::data() const
   {
     return toEvents().data();
   }
@@ -297,7 +297,7 @@ namespace midi
   {
     NoteTrack* et = new NoteTrack;
   
-    for (size_t i = 0; i < note_.size(); i++)
+    for (std::size_t i = 0; i < note_.size(); i++)
       {
         et->add(note_[i]);
       }

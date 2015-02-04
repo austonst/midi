@@ -16,25 +16,25 @@ namespace midi
 
   //Event functions
   //All events must have a delta time
-  uint32_t Event::dt() const
+  std::uint32_t Event::dt() const
   {
     return deltaTime_;
   }
 
-  void Event::setdt(uint32_t indt)
+  void Event::setdt(std::uint32_t indt)
   {
     deltaTime_ = indt;
   }
 
   //Channel event functions
-  std::vector<uint8_t> ChannelEvent::data() const
+  std::vector<std::uint8_t> ChannelEvent::data() const
   {
     //Create the output vector
-    std::vector<uint8_t> out;
+    std::vector<std::uint8_t> out;
 
     //Start adding things to it
     //Delta Time
-    for (size_t i = 0; i < deltaTime_.size(); i++)
+    for (std::size_t i = 0; i < deltaTime_.size(); i++)
       {
         out.push_back(deltaTime_[i]);
       }
@@ -49,13 +49,13 @@ namespace midi
     return out;
   }
 
-  size_t ChannelEvent::size() const
+  std::size_t ChannelEvent::size() const
   {
     if (param2_ != 0) return deltaTime_.size() + 3;
     return deltaTime_.size() + 2;
   }
 
-  uint16_t ChannelEvent::getNote() const
+  std::uint16_t ChannelEvent::getNote() const
   {
     if (usesNote_ == 1)
       {
@@ -69,7 +69,7 @@ namespace midi
   }
 
   //Note Off event
-  NoteOffEvent::NoteOffEvent(uint32_t deltaTime, uint8_t channel, uint8_t note, uint8_t velocity)
+  NoteOffEvent::NoteOffEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t note, std::uint8_t velocity)
   {
     deltaTime_ = deltaTime;
     type_ = 0x08;
@@ -80,7 +80,7 @@ namespace midi
   }
 
   //Note On event
-  NoteOnEvent::NoteOnEvent(uint32_t deltaTime, uint8_t channel, uint8_t note, uint8_t velocity)
+  NoteOnEvent::NoteOnEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t note, std::uint8_t velocity)
   {
     deltaTime_ = deltaTime;
     type_ = 0x09;
@@ -91,7 +91,7 @@ namespace midi
   }
 
   //Note Aftertouch event
-  NoteAftertouchEvent::NoteAftertouchEvent(uint32_t deltaTime, uint8_t channel, uint8_t note, uint8_t amount)
+  NoteAftertouchEvent::NoteAftertouchEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t note, std::uint8_t amount)
   {
     deltaTime_ = deltaTime;
     type_ = 0x0A;
@@ -102,7 +102,7 @@ namespace midi
   }
 
   //Controller event
-  ControllerEvent::ControllerEvent(uint32_t deltaTime, uint8_t channel, uint8_t type, uint8_t value)
+  ControllerEvent::ControllerEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t type, std::uint8_t value)
   {
     deltaTime_ = deltaTime;
     type_ = 0x0B;
@@ -113,7 +113,7 @@ namespace midi
   }
 
   //Program Change event
-  ProgramChangeEvent::ProgramChangeEvent(uint32_t deltaTime, uint8_t channel, Instrument number)
+  ProgramChangeEvent::ProgramChangeEvent(std::uint32_t deltaTime, std::uint8_t channel, Instrument number)
   {
     deltaTime_ = deltaTime;
     type_ = 0x0C;
@@ -124,7 +124,7 @@ namespace midi
   }
 
   //Channel Aftertouch event
-  ChannelAftertouchEvent::ChannelAftertouchEvent(uint32_t deltaTime, uint8_t channel, uint8_t amount)
+  ChannelAftertouchEvent::ChannelAftertouchEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t amount)
   {
     deltaTime_ = deltaTime;
     type_ = 0x0D;
@@ -135,7 +135,7 @@ namespace midi
   }
 
   //Pitch Bend event
-  PitchBendEvent::PitchBendEvent(uint32_t deltaTime, uint8_t channel, uint16_t value)
+  PitchBendEvent::PitchBendEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint16_t value)
   {
     deltaTime_ = deltaTime;
     type_ = 0x0E;
@@ -146,19 +146,19 @@ namespace midi
   }
 
   //MetaEvent functions
-  std::vector<uint8_t> MetaEvent::data() const
+  std::vector<std::uint8_t> MetaEvent::data() const
   {
     //Create the output vector
-    std::vector<uint8_t> out;
+    std::vector<std::uint8_t> out;
 
     //Fill it up
-    for (size_t i = 0; i < deltaTime_.size(); i++)
+    for (std::size_t i = 0; i < deltaTime_.size(); i++)
       {
         out.push_back(deltaTime_[i]);
       }
     out.push_back(0xFF);
     out.push_back(type_);
-    for (size_t i = 0; i < length_.size(); i++)
+    for (std::size_t i = 0; i < length_.size(); i++)
       {
         out.push_back(length_[i]);
       }
@@ -168,18 +168,18 @@ namespace midi
     return out;
   }
 
-  size_t MetaEvent::size() const
+  std::size_t MetaEvent::size() const
   {
     return deltaTime_.size() + 2 + length_.size() + data_.size();
   }
 
-  uint16_t MetaEvent::getNote() const
+  std::uint16_t MetaEvent::getNote() const
   {
     return 256;
   }
 
   //Sequence Number event
-  SequenceNumberEvent::SequenceNumberEvent(uint16_t number)
+  SequenceNumberEvent::SequenceNumberEvent(std::uint16_t number)
   {
     deltaTime_ = 0;
     type_ = 0x00;
@@ -195,7 +195,7 @@ namespace midi
     deltaTime_ = 0;
     type_ = 0x01;
     length_ = text.size();
-    for (size_t i = 0; i < text.size(); i++)
+    for (std::size_t i = 0; i < text.size(); i++)
       {
         data_.push_back(text[i]);
       }
@@ -208,7 +208,7 @@ namespace midi
     deltaTime_ = 0;
     type_ = 0x02;
     length_ = text.size();
-    for (size_t i = 0; i < text.size(); i++)
+    for (std::size_t i = 0; i < text.size(); i++)
       {
         data_.push_back(text[i]);
       }
@@ -221,7 +221,7 @@ namespace midi
     deltaTime_ = 0;
     type_ = 0x03;
     length_ = text.size();
-    for (size_t i = 0; i < text.size(); i++)
+    for (std::size_t i = 0; i < text.size(); i++)
       {
         data_.push_back(text[i]);
       }
@@ -234,7 +234,7 @@ namespace midi
     deltaTime_ = 0;
     type_ = 0x04;
     length_ = text.size();
-    for (size_t i = 0; i < text.size(); i++)
+    for (std::size_t i = 0; i < text.size(); i++)
       {
         data_.push_back(text[i]);
       }
@@ -242,12 +242,12 @@ namespace midi
   }
 
   //Lyrics event
-  LyricsEvent::LyricsEvent(uint32_t deltaTime, std::string text)
+  LyricsEvent::LyricsEvent(std::uint32_t deltaTime, std::string text)
   {
     deltaTime_ = deltaTime;
     type_ = 0x05;
     length_ = text.size();
-    for (size_t i = 0; i < text.size(); i++)
+    for (std::size_t i = 0; i < text.size(); i++)
       {
         data_.push_back(text[i]);
       }
@@ -255,12 +255,12 @@ namespace midi
   }
 
   //Marker event
-  MarkerEvent::MarkerEvent(uint32_t deltaTime, std::string text)
+  MarkerEvent::MarkerEvent(std::uint32_t deltaTime, std::string text)
   {
     deltaTime_ = deltaTime;
     type_ = 0x06;
     length_ = text.size();
-    for (size_t i = 0; i < text.size(); i++)
+    for (std::size_t i = 0; i < text.size(); i++)
       {
         data_.push_back(text[i]);
       }
@@ -268,12 +268,12 @@ namespace midi
   }
 
   //Cue Point event
-  CuePointEvent::CuePointEvent(uint32_t deltaTime, std::string text)
+  CuePointEvent::CuePointEvent(std::uint32_t deltaTime, std::string text)
   {
     deltaTime_ = deltaTime;
     type_ = 0x07;
     length_ = text.size();
-    for (size_t i = 0; i < text.size(); i++)
+    for (std::size_t i = 0; i < text.size(); i++)
       {
         data_.push_back(text[i]);
       }
@@ -281,7 +281,7 @@ namespace midi
   }
 
   //MIDI Channel Prefix event
-  MIDIChannelPrefixEvent::MIDIChannelPrefixEvent(uint32_t deltaTime, uint8_t channel)
+  MIDIChannelPrefixEvent::MIDIChannelPrefixEvent(std::uint32_t deltaTime, std::uint8_t channel)
   {
     deltaTime_ = deltaTime;
     type_ = 0x20;
@@ -291,7 +291,7 @@ namespace midi
   }
 
   //End Of Track event
-  EndOfTrackEvent::EndOfTrackEvent(uint32_t deltaTime)
+  EndOfTrackEvent::EndOfTrackEvent(std::uint32_t deltaTime)
   {
     deltaTime_ = deltaTime;
     type_ = 0x2F;
@@ -300,7 +300,7 @@ namespace midi
   }
 
   //Set Tempo event
-  SetTempoEvent::SetTempoEvent(uint32_t deltaTime, uint32_t mspq)
+  SetTempoEvent::SetTempoEvent(std::uint32_t deltaTime, std::uint32_t mspq)
   {
     deltaTime_ = deltaTime;
     type_ = 0x51;
@@ -312,7 +312,7 @@ namespace midi
   }
 
   //SMPTE Offset event
-  SMPTEOffsetEvent::SMPTEOffsetEvent(uint32_t deltaTime, uint8_t hour, uint8_t minute, uint8_t second, uint8_t frame, uint8_t sub_frame)
+  SMPTEOffsetEvent::SMPTEOffsetEvent(std::uint32_t deltaTime, std::uint8_t hour, std::uint8_t minute, std::uint8_t second, std::uint8_t frame, std::uint8_t sub_frame)
   {
     deltaTime_ = deltaTime;
     type_ = 0x54;
@@ -326,7 +326,7 @@ namespace midi
   }
 
   //Time Signature event
-  TimeSignatureEvent::TimeSignatureEvent(uint32_t deltaTime, uint8_t numerator, uint8_t denominator, uint8_t metronome, uint8_t num32s)
+  TimeSignatureEvent::TimeSignatureEvent(std::uint32_t deltaTime, std::uint8_t numerator, std::uint8_t denominator, std::uint8_t metronome, std::uint8_t num32s)
   {
     deltaTime_ = deltaTime;
     type_ = 0x58;
@@ -339,7 +339,7 @@ namespace midi
   }
 
   //Key Signature event
-  KeySignatureEvent::KeySignatureEvent(uint32_t deltaTime, char key, bool scale)
+  KeySignatureEvent::KeySignatureEvent(std::uint32_t deltaTime, char key, bool scale)
   {
     deltaTime_ = deltaTime;
     type_ = 0x59;
@@ -351,7 +351,7 @@ namespace midi
   }
 
   //Sequencer Specific Event
-  SequencerSpecificEvent::SequencerSpecificEvent(uint32_t deltaTime, std::vector<uint8_t> input)
+  SequencerSpecificEvent::SequencerSpecificEvent(std::uint32_t deltaTime, std::vector<std::uint8_t> input)
   {
     deltaTime_ = deltaTime;
     type_ = 0x7F;
@@ -361,18 +361,18 @@ namespace midi
   }
 
   //SysExEvent functions
-  std::vector<uint8_t> SysExEvent::data() const
+  std::vector<std::uint8_t> SysExEvent::data() const
   {
     //Create the output vector
-    std::vector<uint8_t> out;
+    std::vector<std::uint8_t> out;
 
     //Fill it up
-    for (size_t i = 0; i < deltaTime_.size(); i++)
+    for (std::size_t i = 0; i < deltaTime_.size(); i++)
       {
         out.push_back(deltaTime_[i]);
       }
     out.push_back(type_);
-    for (size_t i = 0; i < length_.size(); i++)
+    for (std::size_t i = 0; i < length_.size(); i++)
       {
         out.push_back(length_[i]);
       }
@@ -382,18 +382,18 @@ namespace midi
     return out;
   }
 
-  size_t SysExEvent::size() const
+  std::size_t SysExEvent::size() const
   {
     return deltaTime_.size() + 1 + length_.size() + data_.size();
   }
 
-  uint16_t SysExEvent::getNote() const
+  std::uint16_t SysExEvent::getNote() const
   {
     return 256;
   }
 
   //Normal SysEx event
-  NormalSysExEvent::NormalSysExEvent(uint32_t deltaTime, std::vector<uint8_t> data, bool startDivide)
+  NormalSysExEvent::NormalSysExEvent(std::uint32_t deltaTime, std::vector<std::uint8_t> data, bool startDivide)
   {
     deltaTime_ = deltaTime;
     type_ = 0xF0;
@@ -404,7 +404,7 @@ namespace midi
   }
 
   //Divided SysEx event
-  DividedSysExEvent::DividedSysExEvent(uint32_t deltaTime, std::vector<uint8_t> data, bool endDivide)
+  DividedSysExEvent::DividedSysExEvent(std::uint32_t deltaTime, std::vector<std::uint8_t> data, bool endDivide)
   {
     deltaTime_ = deltaTime;
     type_ = 0xF7;
@@ -415,7 +415,7 @@ namespace midi
   }
 
   //Authorization SysEx event
-  AuthorizationSysExEvent::AuthorizationSysExEvent(uint32_t deltaTime, std::vector<uint8_t> data)
+  AuthorizationSysExEvent::AuthorizationSysExEvent(std::uint32_t deltaTime, std::vector<std::uint8_t> data)
   {
     deltaTime_ = deltaTime;
     type_ = 0xF7;

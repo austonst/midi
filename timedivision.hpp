@@ -13,7 +13,7 @@
 #define _timedivision_hpp_
 
 #include <vector>
-#include <stdint.h>
+#include <cstdint>
 
 namespace midi
 {
@@ -22,14 +22,14 @@ namespace midi
   {
   public:
     TimeDivision();
-    TimeDivision(uint16_t ppqn);
-    TimeDivision(uint8_t fps, uint8_t tpf);
-    std::vector<uint8_t> data() const;
-    void set(uint16_t ppqn);
-    void set(uint8_t fps, uint8_t tpf);
+    TimeDivision(std::uint16_t ppqn);
+    TimeDivision(std::uint8_t fps, std::uint8_t tpf);
+    std::vector<std::uint8_t> data() const;
+    void set(std::uint16_t ppqn);
+    void set(std::uint8_t fps, std::uint8_t tpf);
 
   private:
-    std::vector<uint8_t> data_;
+    std::vector<std::uint8_t> data_;
   };
 
 } //Namespace

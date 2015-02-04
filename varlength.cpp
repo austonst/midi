@@ -36,7 +36,7 @@ namespace midi
 
   //Constructor from uint32_t
   //Since this class can hold 28 bits, this uses the lower 28 bits of the uint32_t
-  VarLength::VarLength(uint32_t in)
+  VarLength::VarLength(std::uint32_t in)
   {
     //Copy over 7 bits at a time
     for (int i = VARLENGTH_MAX_SIZE-1; i >= 0; i--)
@@ -67,11 +67,11 @@ namespace midi
       }
   }
 
-  //Typecast from VarLength to uint32_t
-  VarLength::operator uint32_t() const
+  //Typecast from VarLength to std::uint32_t
+  VarLength::operator std::uint32_t() const
   {
     //Create output
-    uint32_t ret = 0;
+    std::uint32_t ret = 0;
 
     //Add each component
     for (int i = VARLENGTH_MAX_SIZE-1; i >= 0; i--)
@@ -83,7 +83,7 @@ namespace midi
     return ret;
   }
 
-  uint8_t VarLength::operator[](unsigned char index) const
+  std::uint8_t VarLength::operator[](unsigned char index) const
   {
     //Align with actual data
     index += VARLENGTH_MAX_SIZE-size();
@@ -102,10 +102,10 @@ namespace midi
   }
 
   //Returns the size in bytes of this VarLength
-  size_t VarLength::size() const
+  std::size_t VarLength::size() const
   {
     //Starting size is 1
-    size_t ret = 1;
+    std::size_t ret = 1;
 
     //Check most significant bits to determine length
     for (int i = VARLENGTH_MAX_SIZE-2; i >= 0; i--)

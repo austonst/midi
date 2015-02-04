@@ -2,7 +2,7 @@
 # See LICENSE for copying permission.
 
 CC = g++ -g
-CFLAGS = -Wall -Wextra -c
+CFLAGS = -Wall -Wextra -c -std=c++11
 LFLAGS =
 
 TESTMIDI_OBJ = testmidi.o midi.o track.o timedivision.o varlength.o event.o note.o scales.o chords.o

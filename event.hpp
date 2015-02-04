@@ -16,7 +16,7 @@
 #include "instruments.hpp"
 
 #include <vector>
-#include <stdint.h>
+#include <cstdint>
 
 namespace midi
 {
@@ -26,17 +26,17 @@ namespace midi
   public:
     virtual ~Event() {};
     virtual Event* clone() const = 0;
-    virtual std::vector<uint8_t> data() const = 0;
-    virtual size_t size() const = 0;
-    uint32_t dt() const;
-    void setdt(uint32_t indt);
-    virtual uint16_t getNote() const = 0;
+    virtual std::vector<std::uint8_t> data() const = 0;
+    virtual std::size_t size() const = 0;
+    std::uint32_t dt() const;
+    void setdt(std::uint32_t indt);
+    virtual std::uint16_t getNote() const = 0;
   
   protected:
     //Common structure
     VarLength deltaTime_;
-    uint8_t type_;
-    uint8_t usesNote_;
+    std::uint8_t type_;
+    std::uint8_t usesNote_;
   };
 
 
@@ -48,22 +48,22 @@ namespace midi
     virtual ~ChannelEvent() {};
     
     //All channel events write themselves the same way
-    std::vector<uint8_t> data() const;
-    size_t size() const;
-    uint16_t getNote() const;
+    std::vector<std::uint8_t> data() const;
+    std::size_t size() const;
+    std::uint16_t getNote() const;
   
   protected:
     //MIDI Channel Event format
-    uint8_t channel_;
-    uint8_t param1_;
-    uint8_t param2_;
+    std::uint8_t channel_;
+    std::uint8_t param1_;
+    std::uint8_t param2_;
   };
 
   //Note Off event
   class NoteOffEvent : public ChannelEvent
   {
   public:
-    NoteOffEvent(uint32_t deltaTime, uint8_t channel, uint8_t note, uint8_t velocity);
+    NoteOffEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t note, std::uint8_t velocity);
     Event* clone() const {return new NoteOffEvent(deltaTime_, channel_, param1_, param2_);}
   };
 
@@ -71,7 +71,7 @@ namespace midi
   class NoteOnEvent : public ChannelEvent
   {
   public:
-    NoteOnEvent(uint32_t deltaTime, uint8_t channel, uint8_t note, uint8_t velocity);
+    NoteOnEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t note, std::uint8_t velocity);
     Event* clone() const {return new NoteOnEvent(deltaTime_, channel_, param1_, param2_);}
   };
 
@@ -79,7 +79,7 @@ namespace midi
   class NoteAftertouchEvent : public ChannelEvent
   {
   public:
-    NoteAftertouchEvent(uint32_t deltaTime, uint8_t channel, uint8_t note, uint8_t amount);
+    NoteAftertouchEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t note, std::uint8_t amount);
     Event* clone() const {return new NoteAftertouchEvent(deltaTime_, channel_, param1_, param2_);}
   };
 
@@ -87,7 +87,7 @@ namespace midi
   class ControllerEvent : public ChannelEvent
   {
   public:
-    ControllerEvent(uint32_t deltaTime, uint8_t channel, uint8_t type, uint8_t value);
+    ControllerEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t type, std::uint8_t value);
     Event* clone() const {return new ControllerEvent(deltaTime_, channel_, param1_, param2_);}
   };
 
@@ -95,7 +95,7 @@ namespace midi
   class ProgramChangeEvent : public ChannelEvent
   {
   public:
-    ProgramChangeEvent(uint32_t deltaTime, uint8_t channel, Instrument number);
+    ProgramChangeEvent(std::uint32_t deltaTime, std::uint8_t channel, Instrument number);
     Event* clone() const {return new ProgramChangeEvent(deltaTime_, channel_, param1_);}
   };
 
@@ -103,7 +103,7 @@ namespace midi
   class ChannelAftertouchEvent : public ChannelEvent
   {
   public:
-    ChannelAftertouchEvent(uint32_t deltaTime, uint8_t channel, uint8_t amount);
+    ChannelAftertouchEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint8_t amount);
     Event* clone() const {return new ChannelAftertouchEvent(deltaTime_, channel_, param1_);}
   };
 
@@ -111,7 +111,7 @@ namespace midi
   class PitchBendEvent : public ChannelEvent
   {
   public:
-    PitchBendEvent(uint32_t deltaTime, uint8_t channel, uint16_t value);
+    PitchBendEvent(std::uint32_t deltaTime, std::uint8_t channel, std::uint16_t value);
     Event* clone() const {return new PitchBendEvent(deltaTime_, channel_, (param2_<<7)|param1_);}
   };
 
@@ -123,21 +123,21 @@ namespace midi
     virtual ~MetaEvent() {};
   
     //Size is not the same for all meta events, but required for proper writing
-    size_t size() const;
-    virtual std::vector<uint8_t> data() const;
-    uint16_t getNote() const;
+    std::size_t size() const;
+    virtual std::vector<std::uint8_t> data() const;
+    std::uint16_t getNote() const;
   
   protected:
     //MIDI Meta Event format
     VarLength length_;
-    std::vector<uint8_t> data_;
+    std::vector<std::uint8_t> data_;
   };
 
   //Sequence Number event
   class SequenceNumberEvent : public MetaEvent
   {
   public:
-    SequenceNumberEvent(uint16_t number);
+    SequenceNumberEvent(std::uint16_t number);
     Event* clone() const {return new SequenceNumberEvent((data_[0]<<8)|data_[1]);}
   };
 
@@ -177,7 +177,7 @@ namespace midi
   class LyricsEvent : public MetaEvent
   {
   public:
-    LyricsEvent(uint32_t deltaTime, std::string text);
+    LyricsEvent(std::uint32_t deltaTime, std::string text);
     Event* clone() const {return new LyricsEvent(deltaTime_, std::string(data_.begin(), data_.end()));}
   };
 
@@ -185,7 +185,7 @@ namespace midi
   class MarkerEvent : public MetaEvent
   {
   public:
-    MarkerEvent(uint32_t deltaTime, std::string text);
+    MarkerEvent(std::uint32_t deltaTime, std::string text);
     Event* clone() const {return new MarkerEvent(deltaTime_, std::string(data_.begin(), data_.end()));}
   };
 
@@ -193,7 +193,7 @@ namespace midi
   class CuePointEvent : public MetaEvent
   {
   public:
-    CuePointEvent(uint32_t deltaTime, std::string text);
+    CuePointEvent(std::uint32_t deltaTime, std::string text);
     Event* clone() const {return new CuePointEvent(deltaTime_, std::string(data_.begin(), data_.end()));}
   };
 
@@ -201,7 +201,7 @@ namespace midi
   class MIDIChannelPrefixEvent : public MetaEvent
   {
   public:
-    MIDIChannelPrefixEvent(uint32_t deltaTime, uint8_t channel);
+    MIDIChannelPrefixEvent(std::uint32_t deltaTime, std::uint8_t channel);
     Event* clone() const {return new MIDIChannelPrefixEvent(deltaTime_, data_[0]);}
   };
 
@@ -209,7 +209,7 @@ namespace midi
   class EndOfTrackEvent : public MetaEvent
   {
   public:
-    EndOfTrackEvent(uint32_t deltaTime);
+    EndOfTrackEvent(std::uint32_t deltaTime);
     Event* clone() const {return new EndOfTrackEvent(deltaTime_);}
   };
 
@@ -217,7 +217,7 @@ namespace midi
   class SetTempoEvent : public MetaEvent
   {
   public:
-    SetTempoEvent(uint32_t deltaTime, uint32_t mspq);
+    SetTempoEvent(std::uint32_t deltaTime, std::uint32_t mspq);
     Event* clone() const {return new SetTempoEvent(deltaTime_, (data_[0]<<16)|(data_[1]<<8)|data_[2]);}
   };
 
@@ -225,7 +225,7 @@ namespace midi
   class SMPTEOffsetEvent : public MetaEvent
   {
   public:
-    SMPTEOffsetEvent(uint32_t deltaTime, uint8_t hour, uint8_t minute, uint8_t second, uint8_t frame, uint8_t sub_frame);
+    SMPTEOffsetEvent(std::uint32_t deltaTime, std::uint8_t hour, std::uint8_t minute, std::uint8_t second, std::uint8_t frame, std::uint8_t sub_frame);
     Event* clone() const {return new SMPTEOffsetEvent(deltaTime_, data_[0], data_[1], data_[2], data_[3], data_[4]);}
   };
 
@@ -233,7 +233,7 @@ namespace midi
   class TimeSignatureEvent : public MetaEvent
   {
   public:
-    TimeSignatureEvent(uint32_t deltaTime, uint8_t numerator, uint8_t denominator, uint8_t metronome, uint8_t num32s);
+    TimeSignatureEvent(std::uint32_t deltaTime, std::uint8_t numerator, std::uint8_t denominator, std::uint8_t metronome, std::uint8_t num32s);
     Event* clone() const {return new TimeSignatureEvent(deltaTime_, data_[0], data_[1], data_[2], data_[3]);}
   };
 
@@ -241,7 +241,7 @@ namespace midi
   class KeySignatureEvent : public MetaEvent
   {
   public:
-    KeySignatureEvent(uint32_t deltaTime, char key, bool scale);
+    KeySignatureEvent(std::uint32_t deltaTime, char key, bool scale);
     Event* clone() const {return new KeySignatureEvent(deltaTime_, data_[0], data_[1]);}
   };
 
@@ -249,7 +249,7 @@ namespace midi
   class SequencerSpecificEvent : public MetaEvent
   {
   public:
-    SequencerSpecificEvent(uint32_t deltaTime, std::vector<uint8_t> input);
+    SequencerSpecificEvent(std::uint32_t deltaTime, std::vector<std::uint8_t> input);
     Event* clone() const {return new SequencerSpecificEvent(deltaTime_, data_);}
   };
 
@@ -260,20 +260,20 @@ namespace midi
     virtual ~SysExEvent() {};
   
     //We don't know the length of these normally
-    size_t size() const;
-    std::vector<uint8_t> data() const;
-    uint16_t getNote() const;
+    std::size_t size() const;
+    std::vector<std::uint8_t> data() const;
+    std::uint16_t getNote() const;
 
   protected:
     VarLength length_;
-    std::vector<uint8_t> data_;
+    std::vector<std::uint8_t> data_;
   };
 
   //Normal SysEx Event
   class NormalSysExEvent : public SysExEvent
   {
   public:
-    NormalSysExEvent(uint32_t deltaTime, std::vector<uint8_t> data, bool startDivide = false);
+    NormalSysExEvent(std::uint32_t deltaTime, std::vector<std::uint8_t> data, bool startDivide = false);
     Event* clone() const {return new NormalSysExEvent(deltaTime_, data_, true);}
   };
 
@@ -281,7 +281,7 @@ namespace midi
   class DividedSysExEvent : public SysExEvent
   {
   public:
-    DividedSysExEvent(uint32_t deltaTime, std::vector<uint8_t> data, bool endDivide = false);
+    DividedSysExEvent(std::uint32_t deltaTime, std::vector<std::uint8_t> data, bool endDivide = false);
     Event* clone() const {return new DividedSysExEvent(deltaTime_, data_, false);}
   };
 
@@ -289,7 +289,7 @@ namespace midi
   class AuthorizationSysExEvent : public SysExEvent
   {
   public:
-    AuthorizationSysExEvent(uint32_t deltaTime, std::vector<uint8_t> data);
+    AuthorizationSysExEvent(std::uint32_t deltaTime, std::vector<std::uint8_t> data);
     Event* clone() const {return new AuthorizationSysExEvent(deltaTime_, data_);}
   };
 

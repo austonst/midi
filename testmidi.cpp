@@ -76,13 +76,13 @@ int main()
   
   //VL05: uint32_t typecast
   VarLength vl5(12345);
-  if (uint32_t(vl5) != 12345) pass = false;
+  if (std::uint32_t(vl5) != 12345) pass = false;
 
   displayAndReset(pass, fail, "VL05");
 
   //VL06: Assignment operator
   VarLength vl6 = vl5;
-  for (size_t i = 0; i < vl6.size(); i++)
+  for (std::size_t i = 0; i < vl6.size(); i++)
     {
       if (vl6[i] != vl5[i]) pass = false;
     }
@@ -127,7 +127,7 @@ int main()
 
   //NC07: int8_t and int typecast
   Note no7 = no6;
-  if (int8_t(no7) != 70) pass = false;
+  if (std::int8_t(no7) != 70) pass = false;
   if (int(no7) != 70) pass = false;
   if (no7 != 70) pass = false;
   displayAndReset(pass, fail, "NC07");
@@ -261,12 +261,12 @@ int main()
 
   //EV07: KeySignatureEvent construction test
   KeySignatureEvent ev7(0, -2, true);
-  if (int8_t(ev7.data()[4]) != -2) pass = false;
+  if (std::int8_t(ev7.data()[4]) != -2) pass = false;
   if (ev7.data()[5] != 1) pass = false;
   displayAndReset(pass, fail, "EV07");
 
   //EV08: SysExEvent construction test
-  std::vector<uint8_t> testdata;
+  std::vector<std::uint8_t> testdata;
   testdata.push_back(1);
   NormalSysExEvent ev8(0, testdata, true);
   if (ev8.size() != 4) pass = false;
@@ -372,14 +372,14 @@ int main()
   //TR05: NoteTrack -> EventTrack conversion
   NoteTrack nt2;
   nt2.add(10, 2, 3);
-  std::vector<uint8_t> nt2data1 = nt2.data();
-  std::vector<uint8_t> nt2data2 = nt2.toEvents().data();
-  std::vector<uint8_t> nt2data3 = EventTrack(nt2).data();
+  std::vector<std::uint8_t> nt2data1 = nt2.data();
+  std::vector<std::uint8_t> nt2data2 = nt2.toEvents().data();
+  std::vector<std::uint8_t> nt2data3 = EventTrack(nt2).data();
   if (nt2data1.size() != nt2data2.size() ||
       nt2data2.size() != nt2data3.size() ||
       nt2data1.size() != nt2.size()) pass = false;
   if (nt2data1.size() != 31) pass = false;
-  for (size_t i = 0; i < nt2data1.size(); i++)
+  for (std::size_t i = 0; i < nt2data1.size(); i++)
     {
       if (nt2data1[i] != nt2data2[i] || nt2data2[i] != nt2data3[i]) pass = false;
     }
@@ -427,14 +427,14 @@ int main()
   //TR07: Clone test
   Track* et3 = et2.clone();
   if (et3->size() != et2.size()) pass = false;
-  for (size_t i = 0; i < et3->size(); i++)
+  for (std::size_t i = 0; i < et3->size(); i++)
     {
       if (et2.data()[i] != et3->data()[i]) pass = false;
     }
   delete et3;
   et3 = nt3.clone();
   if (et3->size() != nt3.size()) pass = false;
-  for (size_t i = 0; i < et3->size(); i++)
+  for (std::size_t i = 0; i < et3->size(); i++)
     {
       if (nt3.data()[i] != et3->data()[i]) pass = false;
     }

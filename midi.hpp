@@ -26,9 +26,9 @@ namespace midi
   {
   public:
     virtual ~MIDI() {};
-    virtual size_t size() const = 0;
+    virtual std::size_t size() const = 0;
     void write(std::string filename) const;
-    virtual std::vector<uint8_t> data() const = 0;
+    virtual std::vector<std::uint8_t> data() const = 0;
     void setTimeDivision(const TimeDivision & td);
     virtual void clear() = 0;
   protected:
@@ -40,8 +40,8 @@ namespace midi
   public:
     MIDI_Type0(const Track & tr, const TimeDivision & td);
     ~MIDI_Type0();
-    size_t size() const;
-    std::vector<uint8_t> data() const;
+    std::size_t size() const;
+    std::vector<std::uint8_t> data() const;
     void setTrack(const Track & tr);
     void clear();
   private:
@@ -54,8 +54,8 @@ namespace midi
     MIDI_Type1(const std::vector<Track*> & tr, const TimeDivision & td);
     MIDI_Type1(const TimeDivision & td);
     ~MIDI_Type1();
-    size_t size() const;
-    std::vector<uint8_t> data() const;
+    std::size_t size() const;
+    std::vector<std::uint8_t> data() const;
     void addTrack(const Track & tr);
     void clear();
   private:
@@ -68,8 +68,8 @@ namespace midi
     MIDI_Type2(const std::vector<Track*> & tr, const TimeDivision & td);
     MIDI_Type2(const TimeDivision & td);
     ~MIDI_Type2();
-    size_t size() const;
-    std::vector<uint8_t> data() const;
+    std::size_t size() const;
+    std::vector<std::uint8_t> data() const;
     void addTrack(const Track & tr);
     void clear();
   private:

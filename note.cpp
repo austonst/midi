@@ -21,8 +21,8 @@ namespace midi
   Note::Note(const std::string& notation)
   {
     //Extract components and verify size and input
-    int8_t note, mod, octave;
-    int8_t unused = -2;
+    std::int8_t note, mod, octave;
+    std::int8_t unused = -2;
   
     note = notation[0];
     if (notation.size() == 2)
@@ -77,7 +77,7 @@ namespace midi
     if (note < 'C') note += 'H'-'A';
 
     //Make room for the various sharps and flats
-    int8_t newnote = note;
+    std::int8_t newnote = note;
     if (note > 'C') newnote++;
     if (note > 'D') newnote++;
     if (note > 'F') newnote++;
@@ -117,7 +117,7 @@ namespace midi
   }
 
   //Takes in a note as a midi number
-  Note::Note(int8_t innumber) : number_(innumber) {}
+  Note::Note(std::int8_t innumber) : number_(innumber) {}
 
   //Takes in a note as a midi number
   Note::Note(int innumber) : number_(innumber) {}
@@ -143,13 +143,13 @@ namespace midi
   }
 
   //Returns the note as a midi number
-  int8_t Note::midiVal() const
+  std::int8_t Note::midiVal() const
   {
     return number_;
   }
 
   //Typecast to int8_t
-  Note::operator int8_t() const
+  Note::operator std::int8_t() const
   {
     return midiVal();
   }

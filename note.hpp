@@ -14,7 +14,7 @@
 
 #include <string>
 #include <set>
-#include <stdint.h>
+#include <cstdint>
 
 namespace midi
 {
@@ -28,18 +28,18 @@ namespace midi
     //Constructors
     Note();
     Note(const std::string& notation);
-    Note(int8_t innumber);
+    Note(std::int8_t innumber);
     Note(const char* notation);
     Note(int innumber);
 
     //Get the data in different formats
     std::string val() const;
     operator std::string() const;
-    int8_t midiVal() const;
-    operator int8_t() const;
+    std::int8_t midiVal() const;
+    operator std::int8_t() const;
   
   private:
-    int8_t number_;
+    std::int8_t number_;
   };
 
   //Note operators

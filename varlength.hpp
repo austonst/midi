@@ -14,7 +14,7 @@
 #ifndef _varlength_hpp_
 #define _varlength_hpp_
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 
 namespace midi
@@ -28,18 +28,18 @@ namespace midi
     //Constructors
     VarLength();
     VarLength(const VarLength& vl);
-    VarLength(uint32_t in);
+    VarLength(std::uint32_t in);
   
     //Operators and typecasts
-    operator uint32_t() const;
+    operator std::uint32_t() const;
     VarLength& operator=(const VarLength& vl);
-    uint8_t operator[](unsigned char index) const;
+    std::uint8_t operator[](unsigned char index) const;
     
     //Other useful functions
-    size_t size() const;
+    std::size_t size() const;
   private:
     //The number itself
-    uint8_t data_[VARLENGTH_MAX_SIZE];
+    std::uint8_t data_[VARLENGTH_MAX_SIZE];
   };
 
 } //Namespace

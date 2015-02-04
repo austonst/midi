@@ -25,8 +25,8 @@ namespace midi
   struct NoteTime
   {
     Note note;
-    uint32_t begin;
-    uint32_t duration;
+    std::uint32_t begin;
+    std::uint32_t duration;
     Instrument instrument;
   };
 
@@ -50,11 +50,11 @@ namespace midi
     //Common functions
     virtual ~Track() {};
     virtual void clear() = 0;
-    virtual size_t size() const = 0;
+    virtual std::size_t size() const = 0;
     virtual Track* clone() const = 0;
   
     //Retrieve the contents of the track as a vector of uint8_t's
-    virtual std::vector<uint8_t> data() const = 0;
+    virtual std::vector<std::uint8_t> data() const = 0;
   
   private:
   };
@@ -68,11 +68,11 @@ namespace midi
   
     //Operations on the events
     void clear();
-    size_t size() const;
+    std::size_t size() const;
     void add(const Event & ev);
   
     //Implementation of Track::data
-    std::vector<uint8_t> data() const;
+    std::vector<std::uint8_t> data() const;
 
     //Convert to NoteTrack
     NoteTrack toNotes() const;
@@ -91,15 +91,19 @@ namespace midi
   public:
     //Operations on the notes
     void clear();
-    size_t size() const;
-    void add(Note note, uint32_t time, uint32_t duration, Instrument instrument = 0);
+    std::size_t size() const;
+    void add(Note note, std::uint32_t time, std::uint32_t duration,
+             Instrument instrument = 0);
     void add(NoteTime nt);
-    void add(Chord chord, uint32_t time, uint32_t duration, Instrument instrument = 0);
-    void addAfterLastPress(Note note, uint32_t deltaTime, uint32_t duration, Instrument instrument = 0);
-    void addAfterLastPress(Chord chord, uint32_t deltaTime, uint32_t duration, Instrument instrument = 0);
+    void add(Chord chord, std::uint32_t time, std::uint32_t duration,
+             Instrument instrument = 0);
+    void addAfterLastPress(Note note, std::uint32_t deltaTime,
+                           std::uint32_t duration, Instrument instrument = 0);
+    void addAfterLastPress(Chord chord, std::uint32_t deltaTime,
+                           std::uint32_t duration, Instrument instrument = 0);
 
     //Implementation of Track::data
-    std::vector<uint8_t> data() const;
+    std::vector<std::uint8_t> data() const;
 
     //Accessor for read-only examination or debugging
     const std::vector<NoteTime> & note() const {return note_;}
