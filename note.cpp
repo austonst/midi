@@ -48,6 +48,11 @@ namespace midi
             mod = notation[1];
             octave = notation[2] - '0';
           }
+        else
+          {
+            number_ = 0;
+            return;
+          }
       }
     else if (notation.size() == 4)
       {
