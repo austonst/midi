@@ -8,14 +8,9 @@ This is a simple C++ MIDI editing library. The library is really (currently) at 
 * Encapsulation of various music and MIDI concepts into classes which can be easily used to create higher level programs
 
 ##Building
-There are no dependencies, save for a recently up-to-date C++ compiler. I've only tested it using g++ 4.7-4.8 under 32 bit Linux, though I think it should be entirely cross-platform.
+The only requirements for building are CMake >=2.8.8 and a compiler which supports C++11. I've only tested it using g++ 4.7-4.9 under 32 and 64 bit Linux, though I think it should be entirely cross-platform.
 
-The build system for this library is still very primitive (hand-written Linux Makefile). Currently, assuming you have *make* and *g++*, you should be able to build and run the unit tests with:
-```bash
-make
-./testmidi
-```
-Then check the produced .mid files and make sure they play what sound like reasonable snippets of music.
+CMake should produce a library (static by default; set BUILD_SHARED_LIBS to build shared libraries instead) and a statically linked test suite *testmidi*. Running testmidi will test out the library components and create some midi files. Check the produced .mid files and make sure they play what sound like reasonable snippets of music.
 
 ##To-do
 I mainly wrote this as a component of another project (procedural music generation), so I didn't really need some of the features you would expect from a general purpose MIDI library. So, there are many places where things could be improved. Some ideas:
