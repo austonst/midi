@@ -26,10 +26,28 @@ set(SRCS
   ./event.cpp
   ./timedivision.cpp
   ./track.cpp
-  ./midi.cpp
-  )
+  ./midi.cpp)
 
-# Create library and test suite
-add_library(midiobj OBJECT ${SRCS})
-add_library(midi $<TARGET_OBJECTS:midiobj>)
-add_executable(testmidi $<TARGET_OBJECTS:midiobj> ./testmidi.cpp)
+set(HDRS
+  ./note.hpp
+  ./varlength.hpp
+  ./scales.hpp
+  ./chords.hpp
+  ./event.hpp
+  ./timedivision.hpp
+  ./track.hpp
+  ./midi.hpp
+  ./instruments.hpp)
+
+# Create library
+add_library(midi SHARED ${SRCS})
+
+# Create test suite
+add_executable(testmidi ./testmidi.cpp)
+target_link_libraries(testmidi midi)
+
+# Install the library to the appropriate places
+install(TARGETS midi
+  DESTINATION lib)
+install(FILES ${HDRS}
+  DESTINATION include/midi/)
