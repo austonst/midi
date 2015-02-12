@@ -96,7 +96,7 @@ namespace midi
   {
   public:
     ProgramChangeEvent(std::uint32_t deltaTime, std::uint8_t channel, Instrument number);
-    Event* clone() const {return new ProgramChangeEvent(deltaTime_, channel_, param1_);}
+    Event* clone() const {return new ProgramChangeEvent(deltaTime_, channel_, static_cast<Instrument>(param1_));}
   };
 
   //Channel Aftertouch event

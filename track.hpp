@@ -93,14 +93,16 @@ namespace midi
     void clear();
     std::size_t size() const;
     void add(Note note, std::uint32_t time, std::uint32_t duration,
-             Instrument instrument = 0);
+             Instrument instrument = Instrument::ACOUSTIC_GRAND_PIANO);
     void add(NoteTime nt);
     void add(Chord chord, std::uint32_t time, std::uint32_t duration,
-             Instrument instrument = 0);
+             Instrument instrument = Instrument::ACOUSTIC_GRAND_PIANO);
     void addAfterLastPress(Note note, std::uint32_t deltaTime,
-                           std::uint32_t duration, Instrument instrument = 0);
+                           std::uint32_t duration,
+                           Instrument instrument = Instrument::ACOUSTIC_GRAND_PIANO);
     void addAfterLastPress(Chord chord, std::uint32_t deltaTime,
-                           std::uint32_t duration, Instrument instrument = 0);
+                           std::uint32_t duration,
+                           Instrument instrument = Instrument::ACOUSTIC_GRAND_PIANO);
 
     //Implementation of Track::data
     std::vector<std::uint8_t> data() const;

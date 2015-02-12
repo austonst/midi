@@ -112,7 +112,7 @@ namespace midi
             nt.note = val;
             nt.begin = totalTime;
             nt.duration = duration;
-            nt.instrument = 0; //FOR NOW...
+            nt.instrument = Instrument::ACOUSTIC_GRAND_PIANO; //FOR NOW...
             track.add(nt);
           }
       }
@@ -152,7 +152,7 @@ namespace midi
   }
 
   //Adds a note in a few different ways
-  void NoteTrack::add(Note note, std::uint32_t time, std::uint32_t duration, std::uint8_t instrument)
+  void NoteTrack::add(Note note, std::uint32_t time, std::uint32_t duration, Instrument instrument)
   {
     NoteTime nt;
     nt.note = note;
@@ -167,7 +167,7 @@ namespace midi
     note_.push_back(nt);
   }
 
-  void NoteTrack::add(Chord chord, std::uint32_t time, std::uint32_t duration, std::uint8_t instrument)
+  void NoteTrack::add(Chord chord, std::uint32_t time, std::uint32_t duration, Instrument instrument)
   {
     //Add each of the notes
     for (std::set<Note>::const_iterator i = chord.notes().begin(); i != chord.notes().end(); i++)
@@ -182,7 +182,7 @@ namespace midi
   }
 
   //Adds this note deltaTime after the last note begins
-  void NoteTrack::addAfterLastPress(Note note, std::uint32_t deltaTime, std::uint32_t duration, std::uint8_t instrument)
+  void NoteTrack::addAfterLastPress(Note note, std::uint32_t deltaTime, std::uint32_t duration, Instrument instrument)
   {
     std::uint32_t time = 0;
     for (std::size_t i = 0; i < note_.size(); i++)
@@ -196,7 +196,7 @@ namespace midi
   }
 
   //TODO: Verify that this plays all notes at once
-  void NoteTrack::addAfterLastPress(Chord chord, std::uint32_t deltaTime, std::uint32_t duration, std::uint8_t instrument)
+  void NoteTrack::addAfterLastPress(Chord chord, std::uint32_t deltaTime, std::uint32_t duration, Instrument instrument)
   {
     //Add each of the notes
     for (std::set<Note>::const_iterator i = chord.notes().begin(); i != chord.notes().end(); i++)
@@ -215,7 +215,7 @@ namespace midi
     track.add(TimeSignatureEvent(0, 4, 4, 24, 8));
 
     //Find all of the instruments used in this track
-    std::map<std::uint8_t, std::uint8_t> instrumentChannel;
+    std::map<Instrument, std::uint8_t> instrumentChannel;
     std::uint8_t channel = 0;
     for (std::size_t i = 0; i < note_.size(); i++)
       {
@@ -227,7 +227,7 @@ namespace midi
           }
       }
 
-    for (std::map<std::uint8_t, std::uint8_t>::iterator i = instrumentChannel.begin();
+    for (std::map<Instrument, std::uint8_t>::iterator i = instrumentChannel.begin();
          i != instrumentChannel.end(); i++)
       {
         track.add(ProgramChangeEvent(0, i->second, i->first));

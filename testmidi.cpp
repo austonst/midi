@@ -490,10 +490,10 @@ int main()
   //MD04: Write to file
   //Create a short, but noticable track
   EventTrack nt4;
-  midi::Instrument inst = midi::INST_MUTED_TRUMPET;
+  Instrument inst = Instrument::MUTED_TRUMPET;
   nt4.add(TimeSignatureEvent(0, 4, 4, 24, 8));
   nt4.add(ProgramChangeEvent(0, 0, inst));
-  nt4.add(ProgramChangeEvent(0, 1, midi::INST_HONKY_TONK_PIANO));
+  nt4.add(ProgramChangeEvent(0, 1, Instrument::HONKY_TONK_PIANO));
   nt4.add(NoteOnEvent(0, 0, 48, 127));
   nt4.add(NoteOnEvent(0, 1, 48, 127));
   nt4.add(NoteOffEvent(500, 0, 48, 127));
@@ -531,7 +531,7 @@ int main()
   //MD05: Write type 2 to file
   EventTrack nt5;
   nt5.add(TimeSignatureEvent(0, 4, 4, 24, 8));
-  nt5.add(ProgramChangeEvent(0, 0, 48));
+  nt5.add(ProgramChangeEvent(0, 0, midi::Instrument::STRING_ENSEMBLE_1));
   nt5.add(NoteOnEvent(0, 0, 36, 127));
   nt5.add(NoteOffEvent(40000, 0, 36, 127));
   nt5.add(EndOfTrackEvent(0));
@@ -578,18 +578,18 @@ int main()
 
   //MD07: Multi-instrument NoteTrack
   NoteTrack nt7;
-  nt7.add("C5", 0, 1000, 0);
-  nt7.add("D5", 1000, 1000, 13);
-  nt7.add("E5", 2000, 1000, 58);
-  nt7.add("F5", 3000, 1000, 0);
-  nt7.add("G5", 4000, 1000, 73);
-  nt7.add("F5", 5000, 1000, 40);
-  nt7.add("E5", 6000, 1000, 114);
-  nt7.add("E5", 6500, 500, 115);
-  nt7.add("D5", 7000, 1000, 65);
-  nt7.add("D5", 7500, 500, 66);
-  nt7.add("C5", 8000, 2000, 0);
-  nt7.add("C5", 8500, 1500, 13);
+  nt7.add("C5", 0, 1000, Instrument::ACOUSTIC_GRAND_PIANO);
+  nt7.add("D5", 1000, 1000, Instrument::XYLOPHONE);
+  nt7.add("E5", 2000, 1000, Instrument::TUBA);
+  nt7.add("F5", 3000, 1000, Instrument::ACOUSTIC_GRAND_PIANO);
+  nt7.add("G5", 4000, 1000, Instrument::FLUTE);
+  nt7.add("F5", 5000, 1000, Instrument::VIOLIN);
+  nt7.add("E5", 6000, 1000, Instrument::FX_2);
+  nt7.add("E5", 6500, 500, Instrument::FX_SOUNDTRACK);
+  nt7.add("D5", 7000, 1000, Instrument::ALTO_SAX);
+  nt7.add("D5", 7500, 500, Instrument::TENOR_SAX);
+  nt7.add("C5", 8000, 2000, Instrument::ACOUSTIC_GRAND_PIANO);
+  nt7.add("C5", 8500, 1500, Instrument::XYLOPHONE);
   nt7.add("C4", 0, 10000);
   nt7.add("E4", 0, 10000);
   nt7.add("G4", 0, 10000);

@@ -118,7 +118,7 @@ namespace midi
     deltaTime_ = deltaTime;
     type_ = 0x0C;
     channel_ = channel;
-    param1_ = number;
+    param1_ = static_cast<std::uint8_t>(number);
     param2_ = 0;
     usesNote_ = 0;
   }
